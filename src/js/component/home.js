@@ -53,6 +53,18 @@ export function Home() {
 						type="reset"
 						onClick={e => {
 							setlist([]);
+							var raw = "";
+
+							var requestOptions = {
+								method: "DELETE",
+								body: raw,
+								redirect: "follow"
+							};
+
+							fetch(url, requestOptions)
+								.then(response => response.text())
+								.then(result => console.log(result))
+								.catch(error => console.log("error", error));
 						}}
 						value="Reset"></input>
 					<p>Total of tasks: {countItems}</p>

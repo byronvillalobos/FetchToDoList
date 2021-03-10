@@ -5,6 +5,8 @@ import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 export function Home() {
+	let url =
+		"https://assets.breatheco.de/apis/fake/todos/user/byronvillalobos";
 	const [inputValue, setInputValue] = React.useState("");
 	const [list, setlist] = React.useState([]);
 	const validateTask = () => {
@@ -56,13 +58,32 @@ export function Home() {
 					<p>Total of tasks: {countItems}</p>
 				</div>
 			</div>
-			{/* <input
+			<input
 				className="btn btn-primary"
 				type="Submit"
 				onClick={e => {
-					setlist("");
+					var myHeaders = new Headers();
+					myHeaders.append("Content-Type", "application/json");
+
+					var raw = JSON.stringify([
+						{ label: "Make the bed", done: false },
+						{ label: "Walk the dog", done: false },
+						{ label: "Do the replits", done: false }
+					]);
+
+					var requestOptions = {
+						method: "PUT",
+						headers: myHeaders,
+						body: raw,
+						redirect: "follow"
+					};
+
+					fetch(url, requestOptions)
+						.then(response => response.text())
+						.then(result => console.log(result))
+						.catch(error => console.log("error", error));
 				}}
-				value="Submit"></input> */}
+				value="Submit"></input>
 
 			{/* for individual deletion https://stackoverflow.com/questions/5767325/how-can-i-remove-a-specific-item-from-an-array */}
 		</div>

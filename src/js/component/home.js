@@ -11,6 +11,12 @@ export function Home() {
 		if (inputValue === "") alert("No tasks, add a task");
 	};
 	let countItems = list.length;
+	const deletetask = index => {
+		let newList = list;
+		newList.splice(index, 1);
+		console.log(newList);
+		setlist([...newList]);
+	};
 
 	return (
 		<div className="container text-center mt-5 d-flex justify-content-center">
@@ -37,14 +43,16 @@ export function Home() {
 					/>
 				</div>
 
-				<div className="card-body text-left">
+				<div className="card-body">
 					{list.map((name, index) => (
 						<li key={name} className="list-group-item">
-							{name}{" "}
+							{" "}
 							<input
 								type="checkbox"
-								className="form-check-input item float-right"
+								className="form-check-input item float-left"
+								onClick={() => deletetask(index)}
 							/>
+							{name}{" "}
 						</li>
 					))}
 				</div>

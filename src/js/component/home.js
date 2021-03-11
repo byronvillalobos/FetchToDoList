@@ -20,6 +20,20 @@ export function Home() {
 	var url =
 		"https://assets.breatheco.de/apis/fake/todos/user/byronvillalobos";
 
+	useEffect(() => {
+		var requestOptions2 = {
+			method: "GET",
+			redirect: "follow"
+		};
+
+		fetch(url, requestOptions2)
+			.then(response => response.json())
+			.then(data => {
+				setlist(data);
+			})
+			.catch(error => console.log("error", error));
+	}, []);
+
 	return (
 		<div className="container text-center mt-5 d-flex justify-content-center">
 			<div className="card col-6">
@@ -38,8 +52,12 @@ export function Home() {
 						value={inputValue}
 						onKeyPress={e => {
 							if (e.key === "Enter") {
-								setlist(list.concat(inputValue));
-								setInputValue("");
+								let obj = {
+									label: inputValue,
+									done: true
+								};
+								setlist(list.concat(obj));
+								setInputValue(obj);
 							}
 						}}
 					/>
@@ -54,7 +72,8 @@ export function Home() {
 								className="form-check-input item float-left"
 								onClick={() => deletetask(index)}
 							/>
-							{name}{" "}
+							{name.label}
+							{name.done}
 						</li>
 					))}
 				</div>
@@ -82,10 +101,18 @@ export function Home() {
 						className="btn btn-primary"
 						type="Submit"
 						onClick={e => {
+							var myHeaders = new Headers();
+							myHeaders.append(
+								"Content-Type",
+								"application/json"
+							);
+
+							var json = JSON.stringify(list);
+
 							var requestOptions = {
 								method: "PUT",
-								headers: { "Content-Type": "application/json" },
-								body: JSON.stringify(list),
+								headers: myHeaders,
+								body: json,
 								redirect: "follow"
 							};
 
@@ -95,7 +122,7 @@ export function Home() {
 								.catch(error => console.log("error", error));
 						}}
 						value="Submit"></input>
-					<p>Total of tasks: {countItems}</p>
+					<p>{countItems} tasks left</p>
 				</div>
 			</div>
 		</div>

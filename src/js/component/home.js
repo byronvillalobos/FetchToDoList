@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
 //include images into your bundle
 import rigoImage from "../../img/rigo-baby.jpg";
-import "../../styles/index.scss";
 
 //create your first component
 export function Home() {
 	const [inputValue, setInputValue] = React.useState("");
 	const [list, setlist] = React.useState([]);
-	const validateTask = () => {
-		if (inputValue === "") alert("No tasks, add a task");
-	};
+
 	let countItems = list.length;
 	const deletetask = index => {
 		let newList = list;
@@ -45,11 +42,9 @@ export function Home() {
 						className="form-control"
 						label="Task"
 						placeholder="Type your task"
-						onFocus={validateTask}
 						onChange={e => {
 							setInputValue(e.target.value);
 						}}
-						value={inputValue}
 						onKeyPress={e => {
 							if (e.key === "Enter") {
 								let obj = {
@@ -66,7 +61,6 @@ export function Home() {
 				<div className="card-body">
 					{list.map((name, index) => (
 						<li key={name} className="list-group-item">
-							{" "}
 							<input
 								type="checkbox"
 								className="form-check-input item float-left"
@@ -95,6 +89,28 @@ export function Home() {
 								.then(response => response.text())
 								.then(result => console.log(result))
 								.catch(error => console.log("error", error));
+							var myHeaders = new Headers();
+							myHeaders.append(
+								"Content-Type",
+								"application/json"
+							);
+
+							var raw = JSON.stringify([]);
+
+							var requestOptions = {
+								method: "POST",
+								headers: myHeaders,
+								body: raw,
+								redirect: "follow"
+							};
+
+							fetch(
+								"https://assets.breatheco.de/apis/fake/todos/user/byronvillalobos",
+								requestOptions
+							)
+								.then(response => response.text())
+								.then(result => console.log(result))
+								.catch(error => console.log("error", error));
 						}}
 						value="Reset"></input>
 					<input
@@ -106,6 +122,7 @@ export function Home() {
 								"Content-Type",
 								"application/json"
 							);
+							setInputValue("");
 
 							var raw = JSON.stringify(list);
 

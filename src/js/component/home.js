@@ -107,12 +107,12 @@ export function Home() {
 								"application/json"
 							);
 
-							var json = JSON.stringify(list);
+							var raw = JSON.stringify(list);
 
 							var requestOptions = {
 								method: "PUT",
 								headers: myHeaders,
-								body: json,
+								body: raw,
 								redirect: "follow"
 							};
 

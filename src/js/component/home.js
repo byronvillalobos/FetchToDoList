@@ -17,6 +17,8 @@ export function Home() {
 		console.log(newList);
 		setlist([...newList]);
 	};
+	var url =
+		"https://assets.breatheco.de/apis/fake/todos/user/byronvillalobos";
 
 	return (
 		<div className="container text-center mt-5 d-flex justify-content-center">
@@ -63,11 +65,35 @@ export function Home() {
 						type="reset"
 						onClick={e => {
 							setlist([]);
+							var raw0 = "";
+							var requestOptions0 = {
+								method: "DELETE",
+								body: raw0,
+								redirect: "follow"
+							};
+
+							fetch(url, requestOptions0)
+								.then(response => response.text())
+								.then(result => console.log(result))
+								.catch(error => console.log("error", error));
 						}}
 						value="Reset"></input>
 					<input
 						className="btn btn-primary"
 						type="Submit"
+						onClick={e => {
+							var requestOptions = {
+								method: "PUT",
+								headers: { "Content-Type": "application/json" },
+								body: JSON.stringify(list),
+								redirect: "follow"
+							};
+
+							fetch(url, requestOptions)
+								.then(response => response.text())
+								.then(result => console.log(result))
+								.catch(error => console.log("error", error));
+						}}
 						value="Submit"></input>
 					<p>Total of tasks: {countItems}</p>
 				</div>
